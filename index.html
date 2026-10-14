@@ -82,6 +82,12 @@ section{padding-block:72px}
 
 /* filters + products */
 .filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+ .tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px}
+.tab{display:grid;gap:2px;justify-items:center;text-align:center;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:16px;padding:.9em .6em;font:400 1.05rem var(--display);cursor:pointer}
+.tab small{font:300 .78rem var(--body);color:var(--muted)}
+.tab[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.tab[aria-selected="true"] small{color:color-mix(in srgb,var(--on-accent) 75%,transparent)}
+@media (max-width:560px){.tabs{grid-template-columns:1fr}}
 .chip{border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:.45em 1.1em;font:inherit;font-size:.9rem;cursor:pointer}
 .chip[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:22px}
@@ -252,15 +258,12 @@ footer{background:var(--bg2);border-top:1px solid var(--line);padding-block:56px
         <div><span class="eyebrow">Atelier</span><h2>Lumânările noastre</h2></div>
         <p>Fiecare piesă se toarnă la comandă și se ambalează cadou. Alege, adaugă în coș și trimite-ne comanda pe Instagram.</p>
       </div>
-      <div class="filters" role="group" aria-label="Filtrează">
-        <button class="chip" data-f="toate" aria-pressed="true">Toate</button>
-        <button class="chip" data-f="craciun" aria-pressed="false">Crăciun</button>
-        <button class="chip" data-f="borcan" aria-pressed="false">În vas</button>
-        <button class="chip" data-f="platou" aria-pressed="false">Platouri gips</button>
-        <button class="chip" data-f="marturie" aria-pressed="false">Mărturii</button>
-        <button class="chip" data-f="decor" aria-pressed="false">Decorative</button>
-        <button class="chip" data-f="cadou" aria-pressed="false">Seturi cadou</button>
+      <div class="tabs" role="tablist" aria-label="Categorii">
+        <button class="tab" role="tab" data-g="craciun" aria-selected="true">Lumânări de Crăciun<small id="n-craciun"></small></button>
+        <button class="tab" role="tab" data-g="parfumate" aria-selected="false">Lumânări parfumate<small id="n-parfumate"></small></button>
+        <button class="tab" role="tab" data-g="platouri" aria-selected="false">Platouri din gips<small id="n-platouri"></small></button>
       </div>
+      <div class="filters" id="subs" role="group" aria-label="Filtrează"></div>
       <div class="grid" id="grid"></div>
     </div>
   </section>
@@ -410,7 +413,7 @@ const products = [
   {id:16,name:"Vas plisat cu capac",cat:"borcan",img:"vas-capac-flacara",price:150,max:200,meta:"Alb mat · capac cu buton"},
   {id:17,name:"Vas cu patru fitiluri",cat:"borcan",img:"vas-patru-fitile",price:150,max:200,meta:"Vas larg din gips · ardere lungă"},
   {id:18,name:"Lumânări în pahar",cat:"borcan",img:"pahare-fitil-lemn",price:150,max:200,meta:"Pahar transparent · fitil de lemn"},
-  {id:19,name:"Set vas plisat și bujor",cat:"borcan cadou platou",img:"set-platou-vas",price:150,max:200,meta:"Vas pe platou oval · bujor din ceară"},
+  {id:19,name:"Set vas plisat și bujor",cat:"borcan cadou",img:"set-platou-vas",price:150,max:200,meta:"Vas pe platou oval · bujor din ceară"},
   {id:20,name:"Lumânare în cocos",cat:"decor",img:"cocos",price:250,meta:"Jumătate de nucă de cocos · cu fulgi de cocos"},
   {id:32,name:"Lumânare în cocos cu fitil de lemn",cat:"decor",img:"cocos-doua",price:250,meta:"Nucă de cocos naturală · ceară de soia"},
   {id:34,name:"Vas plisat cu margaretă",cat:"borcan cadou",img:"vas-margareta",price:150,max:200,meta:"Floare din ceară în vas de gips · fitil de lemn"},
@@ -436,8 +439,12 @@ const products = [
 ];
 const priceOf=p=>p.max?`${p.price}–${p.max} lei`:`${p.price} lei`;
 const grid = document.getElementById('grid');
-function render(f){
-  grid.innerHTML = products.filter(p=>f==='toate'||p.cat.includes(f)).map(p=>`
+const groupOf=p=>p.cat.includes('craciun')?'craciun':p.cat.includes('platou')?'platouri':'parfumate';
+const SUBS={craciun:[['toate','Toate'],['borcan','În vas'],['decor','Decorative'],['cadou','Seturi cadou']],parfumate:[['toate','Toate'],['borcan','În vas'],['decor','Decorative'],['marturie','Mărturii']],platouri:[]};
+let group='craciun',sub='toate';
+function render(){
+  const list=products.filter(p=>groupOf(p)===group&&(sub==='toate'||p.cat.includes(sub)));
+  grid.innerHTML = list.map(p=>`
     <article class="prod">
       <div class="pic"><img class="photo" src="img/${p.img}.jpg" alt="${p.name}" loading="lazy"></div>
       <div class="body">
@@ -446,12 +453,18 @@ function render(f){
         <div class="row"><span class="price">${priceOf(p)}</span><button class="add" data-id="${p.id}">Adaugă</button></div>
       </div>
     </article>`).join('');
+  const subs=document.getElementById('subs'), opts=SUBS[group];
+  subs.hidden=!opts.length;
+  subs.innerHTML=opts.map(([k,l])=>`<button class="chip" data-f="${k}" aria-pressed="${k===sub}">${l}</button>`).join('');
 }
-render('toate');
-document.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{
-  document.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed',x===c));
-  render(c.dataset.f);
+['craciun','parfumate','platouri'].forEach(g=>{document.getElementById('n-'+g).textContent=products.filter(p=>groupOf(p)===g).length+' produse'});
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+  group=t.dataset.g;sub='toate';
+  document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected',x===t));
+  render();
 }));
+document.getElementById('subs').addEventListener('click',e=>{const c=e.target.closest('.chip');if(!c)return;sub=c.dataset.f;render()});
+render();
 
 let cart = {};
 try{ cart = JSON.parse(localStorage.getItem('lpsm-cart')||'{}') }catch(e){ cart = {} }
