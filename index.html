@@ -94,6 +94,7 @@ section{padding-block:72px}
 .prod{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden}
 .prod .pic{aspect-ratio:4/5;overflow:hidden;background:var(--bg2)}
 .prod .pic img{transition:transform .5s ease}
+.prod .pic img.wide{object-fit:contain}
 .prod:hover .pic img{transform:scale(1.04)}
 .prod .body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:6px;flex:1}
 .prod h3{font-size:1.25rem}
@@ -447,7 +448,7 @@ function render(){
   const list=products.filter(p=>groupOf(p)===group&&(sub==='toate'||p.cat.includes(sub)));
   grid.innerHTML = list.map(p=>`
     <article class="prod">
-      <div class="pic"><img class="photo" src="img/${p.img}.jpg" alt="${p.name}" loading="lazy"></div>
+      <div class="pic"><img class="photo" src="img/${p.img}.jpg" alt="${p.name}" loading="lazy" onload="if(this.naturalWidth>this.naturalHeight*1.05)this.classList.add('wide')"></div>
       <div class="body">
         ${p.tag?`<span class="tag">${p.tag}</span>`:''}
         <h3>${p.name}</h3><div class="meta">${p.meta}</div>
