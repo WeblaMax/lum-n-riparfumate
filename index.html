@@ -255,7 +255,9 @@ footer{background:var(--bg2);border-top:1px solid var(--line);padding-block:56px
       <div class="filters" role="group" aria-label="Filtrează">
         <button class="chip" data-f="toate" aria-pressed="true">Toate</button>
         <button class="chip" data-f="craciun" aria-pressed="false">Crăciun</button>
-        <button class="chip" data-f="borcan" aria-pressed="false">În borcan</button>
+        <button class="chip" data-f="borcan" aria-pressed="false">În vas</button>
+        <button class="chip" data-f="platou" aria-pressed="false">Platouri gips</button>
+        <button class="chip" data-f="marturie" aria-pressed="false">Mărturii</button>
         <button class="chip" data-f="decor" aria-pressed="false">Decorative</button>
         <button class="chip" data-f="cadou" aria-pressed="false">Seturi cadou</button>
       </div>
@@ -392,19 +394,37 @@ const art = {
   spiral:`<svg viewBox="0 0 100 120"><path d="M50 6C60 30 78 60 76 104H24C22 60 40 30 50 6Z" fill="url(#wax)" stroke="var(--line)"/><path d="M34 90c14-6 26-14 36-22M30 72c14-6 24-14 32-24M38 52c8-6 14-12 18-22" stroke="var(--line)" fill="none"/><path d="M36 100l14-8 14 8-14 6Z" fill="var(--accent)"/></svg>`
 };
 const products = [
-  {id:1,name:"Căsuța de iarnă",cat:"craciun borcan",img:"casuta-iarna",price:280,meta:"Vas de gips cu relief auriu · fitil de lemn",tag:"Bestseller"},
-  {id:2,name:"Carusel",cat:"craciun borcan cadou",img:"carusel",price:350,meta:"Vas cu capac, cai aurii pictați manual",tag:"Nou"},
-  {id:3,name:"Brăduț în vas de gips",cat:"craciun borcan",img:"brad-gips",price:260,meta:"Două fitiluri de lemn · alb sau verde salvie"},
+  {id:1,name:"Căsuța de iarnă",cat:"craciun borcan",img:"casuta-iarna",price:150,meta:"Vas de gips cu relief auriu · fitil de lemn",tag:"Bestseller"},
+  {id:2,name:"Carusel",cat:"craciun borcan cadou",img:"carusel",price:150,meta:"Vas cu capac, cai aurii pictați manual",tag:"Nou"},
+  {id:3,name:"Brăduț în vas de gips",cat:"craciun borcan",img:"brad-gips",price:150,meta:"Două fitiluri de lemn · alb sau verde salvie"},
+  {id:5,name:"Fulg de nea în vas plisat",cat:"craciun borcan",img:"fulg-borcan",price:150,meta:"Vas de gips cu capac clopoțel"},
   {id:4,name:"Omuleți de turtă dulce",cat:"craciun decor",img:"turta-dulce",price:60,meta:"De la alb la ciocolatiu · set sau bucată"},
-  {id:5,name:"Fulg de nea în vas plisat",cat:"craciun borcan",img:"fulg-borcan",price:240,meta:"Vas de gips cu capac clopoțel"},
   {id:6,name:"Set cadou „Revelion”",cat:"cadou craciun",img:"set-cadou",price:390,meta:"Brad spiralat, glob și ren · cutie cu felicitare",tag:"Cadou"},
-  {id:7,name:"Lumânare cu fundă vișinie",cat:"borcan cadou",img:"fundite",price:220,meta:"Vas de gips plisat · fitil dublu de lemn"},
-  {id:8,name:"Dovleac cu capac",cat:"borcan",img:"dovleac",price:230,meta:"Colecția de toamnă · capac cu codiță aurie"},
+  {id:7,name:"Lumânare cu fundă vișinie",cat:"borcan cadou",img:"fundite",price:150,max:200,meta:"Vas de gips plisat · fitil dublu de lemn"},
+  {id:8,name:"Dovleac cu capac",cat:"borcan",img:"dovleac",price:150,max:200,meta:"Colecția de toamnă · capac cu codiță aurie"},
+  {id:13,name:"Vas ceramic cu capac",cat:"borcan",img:"vas-ceramic",price:150,max:200,meta:"Culoare nude mat · ardere curată"},
+  {id:14,name:"Vas verde salvie cu capac",cat:"borcan",img:"vas-verde-capac",price:150,max:200,meta:"Gips plisat · fitil de lemn"},
+  {id:15,name:"Vas plisat stropit roz",cat:"borcan",img:"vas-stropit-roz",price:150,max:200,meta:"Pictat manual · fitil de lemn"},
+  {id:16,name:"Vas plisat cu capac",cat:"borcan",img:"vas-capac-flacara",price:150,max:200,meta:"Alb mat · capac cu buton"},
+  {id:17,name:"Vas cu patru fitiluri",cat:"borcan",img:"vas-patru-fitile",price:150,max:200,meta:"Vas larg din gips · ardere lungă"},
+  {id:18,name:"Lumânări în pahar",cat:"borcan",img:"pahare-fitil-lemn",price:150,max:200,meta:"Pahar transparent · fitil de lemn"},
+  {id:19,name:"Set vas plisat și bujor",cat:"borcan cadou platou",img:"set-platou-vas",price:150,max:200,meta:"Vas pe platou oval · bujor din ceară"},
+  {id:20,name:"Lumânare în cocos",cat:"decor",img:"cocos",price:250,meta:"Jumătate de nucă de cocos · cu fulgi de cocos"},
   {id:9,name:"Bujor din ceară",cat:"decor",img:"bujori",price:150,meta:"Roz pudrat sau ivoire · petale lucrate în detaliu"},
   {id:10,name:"Soare și Lună",cat:"decor",img:"soare-luna",price:140,meta:"Lumânare decorativă cu relief"},
-  {id:11,name:"Margaretă în vas plisat",cat:"decor cadou",img:"margarete",price:120,meta:"Ideală ca mărturie de nuntă sau cumătrie"},
-  {id:12,name:"Tăviță din gips",cat:"decor",img:"tavite-gips",price:110,meta:"Ovală, cu foiță aurie · pentru lumânări și bijuterii"}
+  {id:12,name:"Platou oval din gips",cat:"platou decor",img:"tavite-gips",price:150,meta:"Cu foiță aurie · pentru lumânări și bijuterii"},
+  {id:21,name:"Platou cu bujori",cat:"platou decor",img:"platou-bujori",price:150,meta:"Platou din gips · alb, gri sau antracit"},
+  {id:22,name:"Platou bubble din gips",cat:"platou decor",img:"platou-bubble",price:150,meta:"Pentru bijuterii sau lumânări"},
+  {id:23,name:"Platou bubble pentru cafea",cat:"platou decor",img:"platou-cafea",price:150,meta:"Suport rotund din gips"},
+  {id:24,name:"Suport în formă de inimă",cat:"platou decor",img:"suport-inima",price:150,meta:"Gips alb · pentru lumânare mică"},
+  {id:11,name:"Mărturie margaretă",cat:"marturie cadou",img:"margarete",price:40,meta:"Ambalată în tul, cu fundă · mărturie nuntă sau cumătrie"},
+  {id:25,name:"Mărturie margaretă în tul",cat:"marturie cadou",img:"marturie-margareta",price:40,meta:"Fundă satin verde salvie, felicitare inclusă"},
+  {id:26,name:"Mărturie bubble cu iută",cat:"marturie cadou",img:"marturie-bubble-iuta",price:40,meta:"Sfoară de iută și floricele uscate"},
+  {id:27,name:"Mărturie bubble argintie",cat:"marturie cadou",img:"marturie-bubble-argintiu",price:40,meta:"Cu eticheta personalizată a invitatului"},
+  {id:28,name:"Mărturie plisată cu perlă",cat:"marturie cadou",img:"marturie-perla",price:45,meta:"Cutiuță ivoire, fundă satin și perlă"},
+  {id:29,name:"Mărturie cu flori uscate",cat:"marturie cadou",img:"marturie-flori-uscate",price:45,meta:"Sfoară de iută, eticheta cu inițiale și data"}
 ];
+const priceOf=p=>p.max?`${p.price}–${p.max} lei`:`${p.price} lei`;
 const grid = document.getElementById('grid');
 function render(f){
   grid.innerHTML = products.filter(p=>f==='toate'||p.cat.includes(f)).map(p=>`
@@ -413,7 +433,7 @@ function render(f){
       <div class="body">
         ${p.tag?`<span class="tag">${p.tag}</span>`:''}
         <h3>${p.name}</h3><div class="meta">${p.meta}</div>
-        <div class="row"><span class="price">${p.price} lei</span><button class="add" data-id="${p.id}">Adaugă</button></div>
+        <div class="row"><span class="price">${priceOf(p)}</span><button class="add" data-id="${p.id}">Adaugă</button></div>
       </div>
     </article>`).join('');
 }
@@ -432,13 +452,14 @@ function update(){
   const items=Object.entries(cart).filter(([,q])=>q>0).map(([id,q])=>({...products.find(p=>p.id==id),q}));
   document.getElementById('cartCount').textContent=items.reduce((s,i)=>s+i.q,0);
   const total=items.reduce((s,i)=>s+i.q*i.price,0);
-  document.getElementById('total').textContent=total+' lei';
+  const dl=items.some(i=>i.max)?'de la ':'';
+  document.getElementById('total').textContent=dl+total+' lei';
   document.getElementById('lines').innerHTML = items.length? items.map(i=>`
     <div class="line"><span>${i.name}</span>
     <span class="qty"><button data-d="-1" data-id="${i.id}" aria-label="Scade">−</button>${i.q}<button data-d="1" data-id="${i.id}" aria-label="Adaugă">+</button></span>
-    <span>${i.q*i.price} lei</span></div>`).join('') : '<p class="small">Coșul e gol. Adaugă o lumânare din atelier.</p>';
+    <span>${i.max?'de la ':''}${i.q*i.price} lei</span></div>`).join('') : '<p class="small">Coșul e gol. Adaugă o lumânare din atelier.</p>';
   document.getElementById('msg').value = items.length ?
-    'Bună ziua! Aș dori să comand:\n'+items.map(i=>`• ${i.name} × ${i.q} = ${i.q*i.price} lei`).join('\n')+`\nTotal: ${total} lei\nAroma dorită: \nLocalitatea de livrare: ` : '';
+    'Bună ziua! Aș dori să comand:\n'+items.map(i=>`• ${i.name} × ${i.q} = ${i.max?'de la ':''}${i.q*i.price} lei`).join('\n')+`\nTotal: ${dl}${total} lei\nAroma dorită: \nLocalitatea de livrare: ` : '';
   save();
 }
 grid.addEventListener('click',e=>{const b=e.target.closest('.add');if(!b)return;cart[b.dataset.id]=(cart[b.dataset.id]||0)+1;update();say('Adăugat în coș')});
