@@ -374,10 +374,9 @@ footer{background:var(--bg2);border-top:1px solid var(--line);padding-block:56px
     <div class="panel-head"><h2 id="cartTitle">Coșul tău</h2><button class="x" id="cartClose" aria-label="Închide">×</button></div>
     <div id="lines"></div>
     <div class="total"><span>Total</span><span id="total">0 lei</span></div>
-    <p class="small">Copiază mesajul de mai jos și trimite-l pe Instagram. Îți confirmăm comanda și livrarea în aceeași zi.</p>
-    <textarea class="msg" id="msg" readonly aria-label="Mesaj comandă"></textarea>
-    <button class="btn" id="copyBtn">Copiază comanda</button>
-    <a class="btn ghost" href="https://www.instagram.com/lumanari_parfumate_sm_/" target="_blank" rel="noopener">Deschide Instagram</a>
+    <p class="small">Completează aroma și localitatea în mesaj, apoi apasă „Cerere comandă". Mesajul se copiază și se deschide chat-ul nostru de Instagram. Lipește-l acolo și trimite-l. Îți confirmăm comanda și livrarea în aceeași zi.</p>
+    <textarea class="msg" id="msg" aria-label="Mesaj comandă"></textarea>
+    <button class="btn" id="orderBtn">Cerere comandă</button>
   </div>
 </div>
 <div class="toast" id="toast" hidden></div>
@@ -449,9 +448,12 @@ document.getElementById('cartOpen').onclick=()=>{drawer.hidden=false};
 document.getElementById('cartClose').onclick=()=>{drawer.hidden=true};
 drawer.addEventListener('click',e=>{if(e.target===drawer)drawer.hidden=true});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')drawer.hidden=true});
-document.getElementById('copyBtn').onclick=()=>{
+document.getElementById('orderBtn').onclick=()=>{
   const m=document.getElementById('msg'); if(!m.value){say('Coșul e gol');return}
-  navigator.clipboard.writeText(m.value).then(()=>say('Comanda a fost copiată')).catch(()=>{m.select();say('Selectat. Copiază manual')});
+  // Instagram nu permite trimiterea automată dintr-o pagină web: copiem mesajul și deschidem chat-ul direct.
+  try{navigator.clipboard.writeText(m.value).catch(()=>{})}catch(e){}
+  window.open('https://ig.me/m/lumanari_parfumate_sm_','_blank','noopener');
+  say('Mesaj copiat. Lipește-l în chat și trimite');
 };
 update();
 </script>
