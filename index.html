@@ -257,7 +257,7 @@ footer{background:var(--bg2);border-top:1px solid var(--line);padding-block:56px
     <div class="wrap">
       <div class="head">
         <div><span class="eyebrow">Atelier</span><h2>Lumânările noastre</h2></div>
-        <p>Fiecare piesă se toarnă la comandă și se ambalează cadou. Alege, adaugă în coș și trimite-ne comanda pe Instagram.</p>
+        <p>Fiecare piesă se toarnă la comandă și se ambalează cadou. Alege, adaugă în coș și trimite-ne comanda pe WhatsApp.</p>
       </div>
       <div class="tabs" role="tablist" aria-label="Categorii">
         <button class="tab" role="tab" data-g="craciun" aria-selected="true">Lumânări de Crăciun<small id="n-craciun"></small></button>
@@ -354,7 +354,7 @@ footer{background:var(--bg2);border-top:1px solid var(--line);padding-block:56px
   <div class="wrap">
     <div class="foot">
       <div><a class="logo" href="#top" style="color:var(--fg)"><b>LPSM</b><span>Handmade Candles</span></a><p style="margin-top:.8em;max-width:28em">Lumânări turnate manual din ceară de soia, cu dragoste, în Moldova.</p></div>
-      <div><h3>Comenzi</h3><a href="https://www.instagram.com/lumanari_parfumate_sm_/" target="_blank" rel="noopener">Instagram · @lumanari_parfumate_sm_</a></div>
+      <div><h3>Comenzi</h3><a href="https://wa.me/37367265492" target="_blank" rel="noopener">WhatsApp · +373 672 65 492</a><a href="https://www.instagram.com/lumanari_parfumate_sm_/" target="_blank" rel="noopener">Instagram · @lumanari_parfumate_sm_</a></div>
       <div><h3>Pagini</h3><a href="#produse">Lumânări</a><a href="#masterclass">Masterclass</a><a href="#nunta">Mărturii nuntă</a><a href="#livrare">Livrare</a></div>
     </div>
     <div class="credit">
@@ -373,9 +373,9 @@ footer{background:var(--bg2);border-top:1px solid var(--line);padding-block:56px
     <div id="lines"></div>
     <div class="total"><span>Total</span><span id="total">0 lei</span></div>
     <p class="small" id="shipNote"></p>
-    <p class="small">Completează aroma și localitatea în mesaj, apoi apasă „Cerere comandă". Mesajul se copiază și se deschide chat-ul nostru de Instagram. Lipește-l acolo și trimite-l. Îți confirmăm comanda și livrarea în aceeași zi.</p>
+    <p class="small">Completează aroma și localitatea în mesaj, apoi apasă „Cerere comandă". Se deschide WhatsApp cu comanda deja scrisă, iar tu doar o trimiți. Îți confirmăm comanda și livrarea în aceeași zi.</p>
     <textarea class="msg" id="msg" aria-label="Mesaj comandă"></textarea>
-    <button class="btn" id="orderBtn">Cerere comandă</button>
+    <button class="btn" id="orderBtn">Cerere comandă pe WhatsApp</button>
   </div>
 </div>
 <div class="toast" id="toast" hidden></div>
@@ -503,10 +503,7 @@ drawer.addEventListener('click',e=>{if(e.target===drawer)drawer.hidden=true});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')drawer.hidden=true});
 document.getElementById('orderBtn').onclick=()=>{
   const m=document.getElementById('msg'); if(!m.value){say('Coșul e gol');return}
-  // Instagram nu permite trimiterea automată dintr-o pagină web: copiem mesajul și deschidem chat-ul direct.
-  try{navigator.clipboard.writeText(m.value).catch(()=>{})}catch(e){}
-  window.open('https://ig.me/m/lumanari_parfumate_sm_','_blank','noopener');
-  say('Mesaj copiat. Lipește-l în chat și trimite');
+  window.open('https://wa.me/37367265492?text='+encodeURIComponent(m.value),'_blank','noopener');
 };
 update();
 </script>
